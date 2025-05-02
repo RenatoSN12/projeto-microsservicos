@@ -1,0 +1,24 @@
+using Emitix.ProductService.Common;
+using Emitix.ProductService.DTOs;
+using Emitix.ProductService.DTOs.Requests;
+using Emitix.ProductService.DTOs.Responses;
+using Emitix.ProductService.Services;
+using Emitix.ProductService.Services.Products;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Emitix.ProductService.Endpoints.Products;
+
+public class CreateProductEndpoint : IEndpoint
+{
+    public static void Map(IEndpointRouteBuilder app)
+        => app.MapPost("/", CreateProduct)
+            .WithName("Product: Create a Product")
+            .WithSummary("Creates a new product")
+            .Produces<Response<ProductDto>>();
+
+    private static async Task<IResult> CreateProduct(CreateProductDto request, IProductService service)
+    {
+        var result = await service.AddProduct(request);
+        return TypedResults.Json(result, statusCode: result.Code);
+    }
+}
