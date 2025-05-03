@@ -1,0 +1,27 @@
+namespace Emitix.StockService.Common;
+
+public static class AppExtensions
+{
+    public static void ConfigureDevEnvironment(this WebApplication app)
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.MapSwagger().RequireAuthorization();
+    }
+
+    public static void MapEndpoints(this WebApplication app)
+    {
+        var endpoints = app.MapGroup("");
+
+        // endpoints.MapGroup("api/v1/products")
+        //     .WithTags("Products")
+        //     .MapEndpoint<GetProductByCodeEndpoint>()
+        //     .MapEndpoint<CreateProductEndpoint>();
+    }
+
+    // private static IEndpointRouteBuilder MapEndpoint<T>(this IEndpointRouteBuilder app) where T : IEndpoint
+    // {
+    //     T.Map(app);
+    //     return app;
+    // }
+}

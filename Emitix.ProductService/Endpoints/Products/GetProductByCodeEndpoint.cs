@@ -10,13 +10,13 @@ public class GetProductByCodeEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/", GetProduct)
+        app.MapGet("/", HandleAsync)
             .WithName("Product: Get Product By Code")
             .WithSummary("Get a product by code")
             .Produces<Response<ProductDto>>();
     }
     
-    private static async Task<IResult> GetProduct(IProductService service, string code)
+    private static async Task<IResult> HandleAsync(IProductService service, string code)
     {
         var result = await service.GetProductByCodeAsync(code);
         return TypedResults.Json(result, statusCode: result.Code);

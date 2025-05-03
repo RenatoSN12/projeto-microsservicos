@@ -11,14 +11,14 @@ namespace Emitix.ProductService.Endpoints.Products;
 public class CreateProductEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
-        => app.MapPost("/", CreateProduct)
+        => app.MapPost("/", HandleAsync)
             .WithName("Product: Create a Product")
             .WithSummary("Creates a new product")
             .Produces<Response<ProductDto>>();
 
-    private static async Task<IResult> CreateProduct(CreateProductDto request, IProductService service)
+    private static async Task<IResult> HandleAsync(CreateProductDto request, IProductService service)
     {
-        var result = await service.AddProduct(request);
+        var result = await service.CreateProduct(request);
         return TypedResults.Json(result, statusCode: result.Code);
     }
 }

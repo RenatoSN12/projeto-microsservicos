@@ -1,4 +1,3 @@
-using Emitix.ProductService.Common;
 using Emitix.StockService.Common;
 
 var builder = WebApplication.CreateBuilder(args);

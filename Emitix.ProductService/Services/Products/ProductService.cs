@@ -21,8 +21,8 @@ public class ProductService(
         {
             var product = await repository.GetByCodeAsync(productCode);
             if (product is null)
-                return Response<ProductDto>.Success(null,
-                    "Não foi encontrado um produto com o código informado.");
+                return Response<ProductDto>.Error(null,
+                    "Não foi encontrado um produto com o código informado.", 404);
 
             return Response<ProductDto>.Success(product.ToDto());
         }
@@ -32,7 +32,7 @@ public class ProductService(
         }
     }
 
-    public async Task<Response<ProductDto>> AddProduct(CreateProductDto product)
+    public async Task<Response<ProductDto>> CreateProduct(CreateProductDto product)
     {
         try
         {
@@ -44,7 +44,7 @@ public class ProductService(
             var productEntity = product.ToEntity();
             await repository.CreateAsync(productEntity);
             await unitOfWork.CommitAsync();
-            return Response<ProductDto>.Success(productEntity.ToDto());
+            return Response<ProductDto>.Success(productEntity.ToDto(), code: 201);
         }
         catch (Exception e)
         {

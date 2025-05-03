@@ -1,7 +1,7 @@
 using Emitix.ProductService.DTOs.Requests;
 using FluentValidation;
 
-namespace Emitix.ProductService.Services.Products;
+namespace Emitix.ProductService.Services.Products.Validators;
 
 public class CreateProductValidator : AbstractValidator<CreateProductDto>
 {

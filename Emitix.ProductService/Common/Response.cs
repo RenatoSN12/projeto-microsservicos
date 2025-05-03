@@ -19,7 +19,7 @@ public record Response<T>
         Code = code;
     }
 
-    public static Response<T> Success(T? data, string message = "")
+    public static Response<T> Success(T? data, string message = "", int code = 200)
         => new(data, message, 200);
     
     public static Response<T> Error(T? data, string message, int code)

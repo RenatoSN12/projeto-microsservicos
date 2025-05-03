@@ -7,5 +7,5 @@ namespace Emitix.ProductService.Services.Products;
 public interface IProductService
 {
     Task<Response<ProductDto>> GetProductByCodeAsync(string productCode);
-    Task<Response<ProductDto>> AddProduct(CreateProductDto product);
+    Task<Response<ProductDto>> CreateProduct(CreateProductDto product);
 }

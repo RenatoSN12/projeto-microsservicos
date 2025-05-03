@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Emitix.ProductService.Common;
+namespace Emitix.StockService.Common;
 
 public record Response<T>
 {

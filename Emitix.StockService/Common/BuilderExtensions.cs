@@ -1,14 +1,8 @@
-using Emitix.ProductService.Data;
-using Emitix.ProductService.Data.UnitOfWork;
-using Emitix.ProductService.DTOs.Requests;
-using Emitix.ProductService.Repositories;
-using Emitix.ProductService.Services;
-using Emitix.ProductService.Services.Products;
-using Emitix.ProductService.Services.Products.Validators;
-using FluentValidation;
+using Emitix.StockService.Data;
+using Emitix.StockService.Data.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
-namespace Emitix.ProductService.Common;
+namespace Emitix.StockService.Common;
 
 public static class BuilderExtensions
 {
@@ -33,9 +27,6 @@ public static class BuilderExtensions
 
     public static void AddServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddTransient<IProductService, Services.Products.ProductService>();
-        builder.Services.AddTransient<IProductRepository, ProductRepository>();
-        builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-        builder.Services.AddScoped<IValidator<CreateProductDto>, CreateProductValidator>();
+        
     }
 }
