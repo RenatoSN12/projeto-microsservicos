@@ -68,7 +68,7 @@ public class BillingService(
     {
         try
         {
-            var result = await repository.GetInvoiceAndProductsByNumberAndSeriesAsync(request);
+            var result = await repository.GetInvoiceWithProductsByNumberAndSeriesAsync(request);
             if (result == null)
                 return Response<InvoiceDto>.Error(null,
                     "Não foi encontrada nenhuma nota fiscal com o número e série informados", 404);
@@ -78,6 +78,21 @@ public class BillingService(
         catch (Exception e)
         {
             return Response<InvoiceDto>.Error(null, e.Message, 500);
+        }
+    }
+
+    public async Task<Response<List<InvoiceDto>>> GetAllInvoices()
+    {
+        try
+        {
+            var invoices = await repository.GetInvoicesWithProductsAsync();
+            return invoices.Count == 0
+                ? Response<List<InvoiceDto>>.Error(null, "Não foi encontrada nenhuma nota fiscal emitida.", 404) 
+                : Response<List<InvoiceDto>>.Success(invoices.Select(x => x.ToDto()).ToList());
+        }
+        catch (Exception e)
+        {
+            return Response<List<InvoiceDto>>.Error(null, e.Message, 500);
         }
     }
 

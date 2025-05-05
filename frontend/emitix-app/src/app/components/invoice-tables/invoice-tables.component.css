@@ -1,0 +1,30 @@
+table tbody tr td {
+    text-align: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    padding: 1em;
+    border-bottom: 1px solid rgb(217, 194, 247);
+}
+
+table tbody tr {
+    background-color: rgb(199, 163, 247);    
+    color: white;
+}
+
+table thead th {
+    color: white;
+    font-family: "Roboto", sans-serif;
+    padding: 1em;
+}
+
+table thead tr {
+    background-color: rgb(217, 194, 247);   
+}
+
+
+.invoice-table {
+    border-collapse: collapse;
+    margin-top: 5%;
+    width: 100%;
+}
+  

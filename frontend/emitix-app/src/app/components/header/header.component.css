@@ -1,0 +1,12 @@
+.app-header{
+    background-color: rgb(213, 187, 248);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+}
+
+h1 {
+    color: rgb(255, 255, 255);
+    font-family: "Roboto", sans-serif;
+}

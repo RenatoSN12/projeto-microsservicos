@@ -10,7 +10,7 @@ public class BillingRepository(AppDbContext context) : IBillingRepository
     public async Task CreateInvoiceAsync(Invoice invoice, CancellationToken cancellationToken = default)
         => await context.Invoices.AddAsync(invoice, cancellationToken);
 
-    public async Task<Invoice?> GetInvoiceAndProductsByNumberAndSeriesAsync(GetInvoiceDto request,
+    public async Task<Invoice?> GetInvoiceWithProductsByNumberAndSeriesAsync(GetInvoiceDto request,
         CancellationToken cancellationToken = default)
         => await context.Invoices
             .AsNoTracking()
@@ -21,16 +21,11 @@ public class BillingRepository(AppDbContext context) : IBillingRepository
                 cancellationToken
             );
 
-    public async Task<Invoice?> GetInvoiceWithProductsByNumberAndSeriesAsync(GetInvoiceDto request,
-        CancellationToken cancellationToken = default)
+    public async Task<List<Invoice>> GetInvoicesWithProductsAsync(CancellationToken cancellationToken = default)
         => await context.Invoices
             .AsNoTracking()
-            .Include(x => x.Products)
-            .FirstOrDefaultAsync(x =>
-                    x.Number == request.InvoiceNumber &&
-                    x.Series == request.InvoiceSeries,
-                cancellationToken
-            );
+            .Include(i => i.Products)
+            .ToListAsync(cancellationToken);
 
     public void UpdateInvoice(Invoice invoice)
         => context.Invoices.Update(invoice);

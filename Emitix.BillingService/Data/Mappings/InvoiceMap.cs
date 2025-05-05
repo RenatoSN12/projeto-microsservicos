@@ -36,5 +36,7 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
         builder.HasMany(x=> x.Products)
             .WithOne(x=> x.Invoice)
             .HasForeignKey(x=> x.InvoiceId);
+
+        builder.HasIndex(x => new { x.Number, x.Series }).IsUnique();
     }
 }

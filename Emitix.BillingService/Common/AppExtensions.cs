@@ -14,9 +14,10 @@ public static class AppExtensions
 
     public static void MapEndpoints(this WebApplication app)
     {
-        app.MapGroup("api/v1/billing")
+        app.MapGroup("api/v1/invoices")
             .WithTags("Products")
             .MapEndpoint<CreateInvoiceEndpoint>()
+            .MapEndpoint<GetAllInvoicesEndpoint>()
             .MapEndpoint<PrintInvoiceEndpoint>();
     }
 

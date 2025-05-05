@@ -1,0 +1,22 @@
+<table class="invoice-table">
+    <thead>
+        <tr>
+            <th>Número / Série</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Data de Emissão</th>
+            <th>Chave NFe</th>
+        </tr>
+    </thead>
+    <tbody>
+    @for(invoice of invoices; track invoice){
+        <tr (click)="toggleExpand(invoice.number, invoice.series)">
+            <td>{{invoice.number}} / {{invoice.series}}</td>
+            <td>"Empresa Ficticia"</td>
+            <td>{{ invoice.totalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</td>
+            <td>{{ invoice.issuedDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ invoice.id}}</td>
+        </tr>
+    }
+    </tbody>
+</table>

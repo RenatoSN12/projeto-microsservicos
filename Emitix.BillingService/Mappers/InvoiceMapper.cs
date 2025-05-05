@@ -21,6 +21,7 @@ public static class InvoiceMapper
     
     public static InvoiceDto ToDto(this Invoice entity)
         => new(
+            entity.Id,
             entity.Number,
             entity.Series,
             entity.CreatedAt,
