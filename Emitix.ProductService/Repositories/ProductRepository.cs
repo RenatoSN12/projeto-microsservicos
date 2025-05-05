@@ -11,4 +11,11 @@ public class ProductRepository(AppDbContext context) : IProductRepository
 
     public async Task<Product?> GetByCodeAsync(string code, CancellationToken cancellationToken)
         => await context.Products.AsNoTracking().FirstOrDefaultAsync(x=>x.Code == code, cancellationToken);
+
+    public async Task<List<string>> GetProductsListByCodes(IEnumerable<string> codes, CancellationToken cancellationToken = default)
+        => await context.Products
+            .AsNoTracking()
+            .Where(x=>codes.Contains(x.Code))
+            .Select(x=>x.Code)
+            .ToListAsync(cancellationToken);
 }

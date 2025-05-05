@@ -19,6 +19,7 @@ public class ProductStock
         Id = Guid.NewGuid();
         ProductCode = productCode;
         Quantity = quantity;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public static ProductStock Create(string productCode, int quantity)

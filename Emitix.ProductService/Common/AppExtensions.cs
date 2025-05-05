@@ -14,11 +14,10 @@ public static class AppExtensions
 
     public static void MapEndpoints(this WebApplication app)
     {
-        var endpoints = app.MapGroup("");
-
-        endpoints.MapGroup("api/v1/products")
+        app.MapGroup("api/v1/products")
             .WithTags("Products")
             .MapEndpoint<GetProductByCodeEndpoint>()
+            .MapEndpoint<VerifyAllCodesExistEndpoint>()
             .MapEndpoint<CreateProductEndpoint>();
     }
 

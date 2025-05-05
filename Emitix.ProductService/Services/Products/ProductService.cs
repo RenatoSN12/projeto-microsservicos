@@ -12,7 +12,7 @@ namespace Emitix.ProductService.Services.Products;
 public class ProductService(
     IProductRepository repository,
     IUnitOfWork unitOfWork,
-    IServiceProvider serviceProvider) 
+    IServiceProvider serviceProvider)
     : IProductService
 {
     public async Task<Response<ProductDto>> GetProductByCodeAsync(string productCode)
@@ -38,7 +38,7 @@ public class ProductService(
         {
             var validator = serviceProvider.GetRequiredService<IValidator<CreateProductDto>>();
             var result = await validator.ValidateAsync(product);
-            if(!result.IsValid)
+            if (!result.IsValid)
                 return Response<ProductDto>.Error(null, result.Errors.ToMessageString(), 400);
 
             var productEntity = product.ToEntity();
@@ -49,6 +49,24 @@ public class ProductService(
         catch (Exception e)
         {
             return Response<ProductDto>.Error(null, e.Message, 500);
+        }
+    }
+
+    public async Task<Response<List<string>>> VerifyAllCodesExist(string[] productCodes)
+    {
+        try
+        {
+            var existingCodes = await repository.GetProductsListByCodes(productCodes);
+            var unfoundedCodes = productCodes.Except(existingCodes).ToList();
+
+            return unfoundedCodes.Count == 0
+                ? Response<List<string>>.Success(existingCodes)
+                : Response<List<string>>.Success(unfoundedCodes,
+                    $"Não foram encontrados produtos cadastrados com os códigos: {string.Join(",", unfoundedCodes)}");
+        }
+        catch (Exception e)
+        {
+            return Response<List<string>>.Error(null, e.Message, 500);
         }
     }
 }

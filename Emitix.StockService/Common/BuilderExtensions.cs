@@ -1,5 +1,10 @@
 using Emitix.StockService.Data;
 using Emitix.StockService.Data.UnitOfWork;
+using Emitix.StockService.DTOs.Requests;
+using Emitix.StockService.Repositories;
+using Emitix.StockService.Services;
+using Emitix.StockService.Services.Validators;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Emitix.StockService.Common;
@@ -27,6 +32,9 @@ public static class BuilderExtensions
 
     public static void AddServices(this WebApplicationBuilder builder)
     {
-        
+        builder.Services.AddTransient<IProductStockService, ProductStockService>();
+        builder.Services.AddTransient<IProductStockRepository, ProductStockRepository>();
+        builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddScoped<IValidator<UpdateProductStockDto>, UpdateProductStockValidator>();
     }
 }

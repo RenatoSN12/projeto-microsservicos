@@ -1,3 +1,6 @@
+using Emitix.StockService.Endpoints;
+using Emitix.StockService.Endpoints.ProductStocks;
+
 namespace Emitix.StockService.Common;
 
 public static class AppExtensions
@@ -11,17 +14,16 @@ public static class AppExtensions
 
     public static void MapEndpoints(this WebApplication app)
     {
-        var endpoints = app.MapGroup("");
-
-        // endpoints.MapGroup("api/v1/products")
-        //     .WithTags("Products")
-        //     .MapEndpoint<GetProductByCodeEndpoint>()
-        //     .MapEndpoint<CreateProductEndpoint>();
+        app.MapGroup("api/v1/stock")
+            .WithTags("Stocks")
+            .MapEndpoint<CreateProductStockEndpoint>()
+            .MapEndpoint<UpdateProductStockEndpoint>()
+            .MapEndpoint<GetStockByProductCodeEndpoint>();
     }
 
-    // private static IEndpointRouteBuilder MapEndpoint<T>(this IEndpointRouteBuilder app) where T : IEndpoint
-    // {
-    //     T.Map(app);
-    //     return app;
-    // }
+    private static IEndpointRouteBuilder MapEndpoint<T>(this IEndpointRouteBuilder app) where T : IEndpoint
+    {
+        T.Map(app);
+        return app;
+    }
 }

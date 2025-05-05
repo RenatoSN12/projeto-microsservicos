@@ -15,7 +15,7 @@ public class ProductStockService(
     IUnitOfWork unitOfWork,
     IServiceProvider serviceProvider) : IProductStockService
 {
-    public async Task<Response<ProductStockDto>> AddProductStock(CreateProductStockDto request)
+    public async Task<Response<ProductStockDto>> CreateProductStock(CreateProductStockDto request)
     {
         try
         {
@@ -59,7 +59,7 @@ public class ProductStockService(
         }
     }
 
-    public async Task<Response<ProductStockDto>> GetByProductCode(string productCode)
+    public async Task<Response<ProductStockDto>> GetStockByProductCode(string productCode)
     {
         try
         {

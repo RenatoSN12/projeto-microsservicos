@@ -12,9 +12,9 @@ public class CreateProductEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/", HandleAsync)
-            .WithName("Product: Create a Product")
+            .WithName("Product: Create Product")
             .WithSummary("Creates a new product")
-            .Produces<Response<ProductDto>>();
+            .Produces<Response<ProductDto>>(StatusCodes.Status201Created, "application/json");
 
     private static async Task<IResult> HandleAsync(CreateProductDto request, IProductService service)
     {
