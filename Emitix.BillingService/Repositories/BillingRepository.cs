@@ -1,3 +1,4 @@
+using Emitix.BillingService.Common.Enums;
 using Emitix.BillingService.Data;
 using Emitix.BillingService.DTOs.Requests;
 using Emitix.BillingService.Models;
@@ -24,6 +25,7 @@ public class BillingRepository(AppDbContext context) : IBillingRepository
     public async Task<List<Invoice>> GetInvoicesWithProductsAsync(CancellationToken cancellationToken = default)
         => await context.Invoices
             .AsNoTracking()
+            .Where(x=> x.InvoiceStatus == EInvoiceStatus.Open)
             .Include(i => i.Products)
             .OrderByDescending(x=> x.Number)
             .ToListAsync(cancellationToken);

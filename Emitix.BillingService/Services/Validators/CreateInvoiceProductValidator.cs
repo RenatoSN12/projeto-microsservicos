@@ -1,5 +1,4 @@
 using Emitix.BillingService.DTOs.Requests;
-using Emitix.BillingService.Services.External;
 using FluentValidation;
 
 namespace Emitix.BillingService.Services.Validators;

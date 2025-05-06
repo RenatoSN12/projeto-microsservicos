@@ -7,16 +7,14 @@ using Emitix.BillingService.Exceptions;
 using Emitix.BillingService.Mappers;
 using Emitix.BillingService.Reports;
 using Emitix.BillingService.Repositories;
-using Emitix.BillingService.Services.External;
+using Emitix.BillingService.Services.Billing;
 using FluentValidation;
-using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Fluent;
 
-namespace Emitix.BillingService.Services.Billing;
+namespace Emitix.BillingService.Services;
 
 public class BillingService(
     IBillingRepository repository,
-    IProductServiceClient productServiceClient,
     IUnitOfWork unitOfWork,
     IServiceProvider serviceProvider)
     : IBillingService
@@ -31,11 +29,6 @@ public class BillingService(
                 return Response<InvoiceDto>.Error(null, validateResult.Errors.ToMessageString(), 400);
 
             var productCodes = request.Products.Select(x => x.ProductCode).ToArray();
-            var invalidCodes = await GetInvalidProductCodes(productCodes);
-
-            if (invalidCodes.Count > 0)
-                return Response<InvoiceDto>.Error(null,
-                    $"Não foram encontrados itens cadastrados com o(s) código(s): {string.Join(", ", invalidCodes)}", 400);
 
             var invoiceEntity = request.ToEntity();
             await repository.CreateInvoiceAsync(invoiceEntity);
@@ -56,6 +49,8 @@ public class BillingService(
     {
         var invoiceResult = await GetByNumberAndSeriesAsync(new GetInvoiceDto(request.InvoiceNumber, request.InvoiceSeries));
 
+        throw new Exception("Invoice not found");
+        
         if (!invoiceResult.IsSuccess)
             return invoiceResult;
 
@@ -113,11 +108,5 @@ public class BillingService(
         {
             return Response<List<InvoiceDto>>.Error(null, e.Message, 500);
         }
-    }
-
-    private async Task<List<string>> GetInvalidProductCodes(string[] productCodes)
-    {
-        var result = await productServiceClient.VerifyExistingCodes(productCodes);
-        return (result.Message.IsNullOrEmpty() ? [] : result.Data)!;
     }
 }

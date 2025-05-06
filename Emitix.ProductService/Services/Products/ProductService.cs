@@ -51,23 +51,6 @@ public class ProductService(
             return Response<ProductDto>.Error(null, e.Message, 500);
         }
     }
-    public async Task<Response<List<string>>> VerifyAllCodesExist(string[] productCodes)
-    {
-        try
-        {
-            var existingCodes = await repository.GetProductsListByCodes(productCodes);
-            var unfoundedCodes = productCodes.Except(existingCodes).ToList();
-
-            return unfoundedCodes.Count == 0
-                ? Response<List<string>>.Success(existingCodes)
-                : Response<List<string>>.Success(unfoundedCodes,
-                    $"Não foram encontrados produtos cadastrados com os códigos: {string.Join(",", unfoundedCodes)}");
-        }
-        catch (Exception e)
-        {
-            return Response<List<string>>.Error(null, e.Message, 500);
-        }
-    }
 
     public async Task<Response<List<ProductDto>>> GetAllProducts()
     {

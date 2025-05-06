@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateProductStockDto } from '../../DTOs/product-stock.dto';
-import { StockService } from '../../services/stock.service';
+import { StockService } from '../../services/stock/stock.service';
 import { InvoiceKeyDto } from '../../DTOs/invoice-key.dto';
 import { AlterInvoiceStatusDto } from '../../DTOs/alter-invoice-status.dto';
 

@@ -18,7 +18,6 @@ public static class AppExtensions
             .WithTags("Products")
             .MapEndpoint<GetProductByCodeEndpoint>()
             .MapEndpoint<GetAllProductsEndpoint>()
-            .MapEndpoint<VerifyAllCodesExistEndpoint>()
             .MapEndpoint<CreateProductEndpoint>();
     }
 

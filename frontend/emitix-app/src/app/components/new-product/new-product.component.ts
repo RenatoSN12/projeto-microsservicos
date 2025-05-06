@@ -4,7 +4,7 @@ import { MatDialogContent, MatDialogModule, MatDialogRef } from '@angular/materi
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProductService } from '../../services/product.service';
 import { NewProductDto } from '../../DTOs/new-product.interface';
-import { StockService } from '../../services/stock.service';
+import { StockService } from '../../services/stock/stock.service';
 import { NewProductStockDto } from '../../DTOs/new-productstock.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
