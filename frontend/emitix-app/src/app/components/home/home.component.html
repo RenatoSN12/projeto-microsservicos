@@ -1,11 +1,15 @@
 <app-header class="header"></app-header>
 <main>
     <div class="invoice-view">
-        <section class="action-buttons">
-            <div>
+        <section class="section-buttons">
+            <div class="action-buttons">
+                <button (click)="openNewProduct()" mat-fab extended>
+                    <mat-icon>add</mat-icon>
+                    Novo Produto
+                  </button>
                 <button (click)="openNewInvoice()" mat-fab extended>
                   <mat-icon>add</mat-icon>
-                  NOVO
+                  Nova Nota
                 </button>
             </div>
         </section>

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Novo Produto</h2>
+<mat-dialog-content class="input-fields" [formGroup]="form">
+    <div class="product-fields">
+        <div class="required-fields">
+            <mat-form-field>
+                <mat-label>Código</mat-label>
+                <input matInput formControlName="code">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Preço Unitário</mat-label>
+              <input matInput formControlName="unitPrice">
+          </mat-form-field>
+        </div>
+        <mat-form-field class="product-description">
+            <mat-label>Descrição</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+    </div>
+    <div class="action-buttons">
+      <button (click)="onCancelButtonClicked()" class="btn-cancel" mat-stroked-button>Cancelar</button>
+      <button (click)="onCreateButtonClicked()" class="btn-create" mat-flat-button>Criar</button>
+    </div>
+</mat-dialog-content>

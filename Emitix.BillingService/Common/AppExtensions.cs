@@ -18,6 +18,7 @@ public static class AppExtensions
             .WithTags("Products")
             .MapEndpoint<CreateInvoiceEndpoint>()
             .MapEndpoint<GetAllInvoicesEndpoint>()
+            .MapEndpoint<AlterInvoiceStatusEndpoint>()
             .MapEndpoint<PrintInvoiceEndpoint>();
     }
 

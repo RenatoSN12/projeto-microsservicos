@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ApiResponse } from '../../interfaces/api-response.interface';
-import { InvoiceResponse } from '../../interfaces/invoice.interface';
-import { CreateInvoiceRequest } from '../../interfaces/create-invoice-request.interface';
+import { ApiResponse } from '../interfaces/api-response.interface';
+import { InvoiceResponse } from '../interfaces/invoice.interface';
+import { CreateInvoiceRequest } from '../interfaces/create-invoice-request.interface';
+import { InvoiceKeyDto } from '../DTOs/invoice-key.dto';
+import { AlterInvoiceStatusDto } from '../DTOs/alter-invoice-status.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +31,12 @@ export class InvoiceService {
     return this.http.post<InvoiceResponse>('http://localhost:5016/api/v1/invoices', values);
   }
 
-  printInvoice(values : {invoiceNumber:number, invoiceSeries:string}){
-    return this.http.post<InvoiceResponse>('http://localhost:5016/api/v1/invoices/print', values);
+ alterStatus(invoice: AlterInvoiceStatusDto):Observable<InvoiceResponse>{
+    return this.http.put<InvoiceResponse>(this.apiUrl + '/alter-status', invoice)
+ }
+
+  printInvoice(invoice: InvoiceKeyDto):Observable<InvoiceResponse>{
+    return this.http.post<InvoiceResponse>(this.apiUrl + '/print', invoice)
   }
 
 }

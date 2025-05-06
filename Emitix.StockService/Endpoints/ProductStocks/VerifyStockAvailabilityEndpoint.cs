@@ -14,7 +14,7 @@ public class VerifyStockAvailabilityEndpoint : IEndpoint
             .Produces<Response<bool>>(StatusCodes.Status200OK, "application/json");
     }
 
-    private static async Task<IResult> HandleAsync(List<ProductStockRequest> request, IStockService service)
+    private static async Task<IResult> HandleAsync(List<ProductStockRequestDto> request, IStockService service)
     {
         var result = await service.VerifyStockAvailability(request);
         return TypedResults.Json(result, statusCode:result.Code);

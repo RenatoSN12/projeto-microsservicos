@@ -17,7 +17,6 @@ namespace Emitix.BillingService.Services.Billing;
 public class BillingService(
     IBillingRepository repository,
     IProductServiceClient productServiceClient,
-    IStockServiceClient stockServiceClient,
     IUnitOfWork unitOfWork,
     IServiceProvider serviceProvider)
     : IBillingService
@@ -82,11 +81,25 @@ public class BillingService(
         }
     }
 
-    public Task<Response<InvoiceDto>> AdjustStockBeforePrintInvoice(GetInvoiceDto request)
+    public async Task<Response<InvoiceDto>> AlterInvoiceStatus(AlterInvoiceStatusDto request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var invoice = await repository.GetInvoiceWithProductsByNumberAndSeriesAsync(new GetInvoiceDto(request.Number, request.Series));
+            if (invoice == null)
+                return Response<InvoiceDto>.Error(null,
+                    "Não foi encontrada nenhuma nota fiscal com o número e série informados", 404);
+            
+            invoice.AlterStatus(request.Status);
+            repository.Update(invoice);
+            await unitOfWork.CommitAsync();
+            return Response<InvoiceDto>.Success(invoice.ToDto());
+        }
+        catch (Exception e)
+        {
+            return Response<InvoiceDto>.Error(null, e.Message, 500);
+        }
     }
-
     public async Task<Response<List<InvoiceDto>>> GetAllInvoices()
     {
         try

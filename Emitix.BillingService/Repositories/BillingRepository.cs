@@ -25,8 +25,9 @@ public class BillingRepository(AppDbContext context) : IBillingRepository
         => await context.Invoices
             .AsNoTracking()
             .Include(i => i.Products)
+            .OrderByDescending(x=> x.Number)
             .ToListAsync(cancellationToken);
 
-    public void UpdateInvoice(Invoice invoice)
+    public void Update(Invoice invoice)
         => context.Invoices.Update(invoice);
 }

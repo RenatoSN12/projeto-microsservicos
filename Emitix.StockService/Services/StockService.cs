@@ -30,32 +30,54 @@ public class StockService(
         }
     }
 
-    public async Task<Response<ProductStockDto>> UpdateProductStock(UpdateProductStockDto request)
+    public async Task<Response<List<ProductStockDto>>> UpdateProductStock(List<UpdateProductStockDto> request)
     {
         try
         {
             var validator = serviceProvider.GetRequiredService<IValidator<UpdateProductStockDto>>();
-            var result = await validator.ValidateAsync(request);
-            if (!result.IsValid)
-                return Response<ProductStockDto>.Error(null, result.Errors.ToMessageString(), 400);
+            foreach (var item in request)
+            {
+                var result = await validator.ValidateAsync(item);
+                if (!result.IsValid)
+                    return Response<List<ProductStockDto>>.Error(null, result.Errors.ToMessageString(), 400);
+            }
 
+            var codes = request.Select(x => x.ProductCode).ToArray();
+            var stocks = await repository.GetByListProductCodesAsync(codes);
 
-            var productStock = await repository.GetByProductCodeAsync(request.ProductCode);
-            if (productStock == null)
-                return NotFoundStockResponse(request.ProductCode);
+            if (stocks.Count != request.Count)
+            {
+                var unfoundStocks = codes.Except(stocks.Select(s => s.ProductCode));
+                return Response<List<ProductStockDto>>.Error(null,
+                    $"Estoque não encontrado para os seguintes produtos: {string.Join(", ", unfoundStocks)}", 400);
+            }
 
-            productStock.Update(request.Quantity, request.MovementType);
-            repository.Update(productStock);
+            var domainErrors = new List<string>();
+            foreach (var item in request)
+            {
+                try
+                {
+                    var stock = stocks.First(s => s.ProductCode == item.ProductCode);
+                    stock.Update(item.Quantity, item.MovementType);
+                    repository.Update(stock);
+                }
+                catch (DomainException ex)
+                {
+                    domainErrors.Add(ex.Message);
+                }
+            }
+            
+            if (domainErrors.Count > 0)
+            {
+                var message = "Falha ao atualizar o estoque:\n\n" + string.Join("\n\n", domainErrors);
+                return Response<List<ProductStockDto>>.Error(null, message, 400);
+            }
             await unitOfWork.CommitAsync();
-            return Response<ProductStockDto>.Success(productStock.ToDto());
-        }
-        catch (DomainException ex)
-        {
-            return Response<ProductStockDto>.Error(null, ex.Message, 400);
+            return Response<List<ProductStockDto>>.Success(stocks.Select(x=>x.ToDto()).ToList());
         }
         catch (Exception e)
         {
-            return Response<ProductStockDto>.Error(null, e.Message, 500);
+            return Response<List<ProductStockDto>>.Error(null, e.Message, 500);
         }
     }
 
@@ -74,7 +96,7 @@ public class StockService(
         }
     }
 
-    public async Task<Response<bool>> VerifyStockAvailability(List<ProductStockRequest> request)
+    public async Task<Response<bool>> VerifyStockAvailability(List<ProductStockRequestDto> request)
     {
         try
         {

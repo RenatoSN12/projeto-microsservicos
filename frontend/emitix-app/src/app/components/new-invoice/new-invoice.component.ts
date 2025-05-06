@@ -13,10 +13,10 @@ import {
   MatDialogContent
 } from '@angular/material/dialog';
 import { ProductService } from '../../services/product.service';
-import { ProductResponse } from '../../../interfaces/products.interface';
-import { CreateInvoiceRequest } from '../../../interfaces/create-invoice-request.interface';
+import { ProductResponse } from '../../interfaces/products.interface';
+import { CreateInvoiceRequest } from '../../interfaces/create-invoice-request.interface';
 import { InvoiceService } from '../../services/invoice.service';
-import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-new-invoice',
@@ -38,6 +38,7 @@ export class NewInvoiceComponent {
   })
   
   products: ProductResponse[] = [];
+  snackbar = inject(MatSnackBar)
   productService = inject(ProductService)
   invoiceService = inject(InvoiceService)
   data = inject(MAT_DIALOG_DATA)  
@@ -66,7 +67,7 @@ export class NewInvoiceComponent {
     );
   }
 
-  onCancelClick(){
+  onCancelButtonClickedClick(){
     this.dialogRef.close();
   }
 
@@ -85,9 +86,15 @@ export class NewInvoiceComponent {
       }))
     };
 
-    this.invoiceService.createInvoice(value).subscribe(() => {
-      this.dialogRef.close(true);
-    });
+    this.invoiceService.createInvoice(value).subscribe({
+      next: ()=> {
+        this.snackbar.open("Nota fiscal gravada com sucesso!", 'Fechar', {duration: 3000})
+        this.dialogRef.close(true)},
+      error: (err) => {
+        const msg = err.error?.message || 'Erro ao gerar a nota fiscal.';
+        this.snackbar.open(msg, 'Fechar', {duration: 6000})
+      }
+    })
   }
 
   displayProduct(product: ProductResponse): string {

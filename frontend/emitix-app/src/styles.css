@@ -12,6 +12,10 @@ html, body {
     --text-color:#1e293b;
 }
 
+.multi-line-snackbar {
+    white-space: pre-line;
+}
+
 * {
     margin: 0;
     padding: 0;

@@ -7,10 +7,15 @@
     height: 25%;
 }
 
-.action-buttons {
+.section-buttons {
     margin-top: 1em;
     display: flex;
     justify-content: flex-end;
+}
+
+.action-buttons {
+    gap: 1rem;
+    display: flex;
 }
 
 .invoice-view {

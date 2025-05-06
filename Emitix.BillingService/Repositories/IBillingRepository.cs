@@ -8,5 +8,5 @@ public interface IBillingRepository
     Task CreateInvoiceAsync(Invoice invoice , CancellationToken cancellationToken = default);
     Task<Invoice?> GetInvoiceWithProductsByNumberAndSeriesAsync(GetInvoiceDto request, CancellationToken cancellationToken = default);
     Task<List<Invoice>> GetInvoicesWithProductsAsync(CancellationToken cancellationToken = default);
-    void UpdateInvoice(Invoice invoice);
+    void Update(Invoice invoice);
 }

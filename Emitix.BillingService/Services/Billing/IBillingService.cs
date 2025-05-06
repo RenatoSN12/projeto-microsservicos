@@ -9,6 +9,6 @@ public interface IBillingService
     Task<Response<InvoiceDto>> CreateInvoiceAsync(CreateInvoiceDto request);
     Task<Response<InvoiceDto>> PrintInvoiceAsync(PrintInvoiceDto request);
     Task<Response<InvoiceDto>> GetByNumberAndSeriesAsync(GetInvoiceDto request);
-    Task<Response<InvoiceDto>> AdjustStockBeforePrintInvoice(List<StockAvailabilityRequest> request);
+    Task<Response<InvoiceDto>> AlterInvoiceStatus(AlterInvoiceStatusDto request);
     Task<Response<List<InvoiceDto>>> GetAllInvoices();
 }

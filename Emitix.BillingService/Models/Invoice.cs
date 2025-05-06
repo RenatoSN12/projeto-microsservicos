@@ -37,4 +37,5 @@ public class Invoice
         
         _products.AddRange(products);
     }
+    public void AlterStatus(EInvoiceStatus status) => InvoiceStatus = status;
 }
