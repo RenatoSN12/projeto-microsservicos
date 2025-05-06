@@ -17,6 +17,7 @@ public static class AppExtensions
         app.MapGroup("api/v1/products")
             .WithTags("Products")
             .MapEndpoint<GetProductByCodeEndpoint>()
+            .MapEndpoint<GetAllProductsEndpoint>()
             .MapEndpoint<VerifyAllCodesExistEndpoint>()
             .MapEndpoint<CreateProductEndpoint>();
     }

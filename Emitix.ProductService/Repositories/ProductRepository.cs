@@ -18,4 +18,9 @@ public class ProductRepository(AppDbContext context) : IProductRepository
             .Where(x=>codes.Contains(x.Code))
             .Select(x=>x.Code)
             .ToListAsync(cancellationToken);
+
+    public async Task<List<Product>> GetAllProducts(CancellationToken cancellationToken = default)
+        => await context.Products
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
 }

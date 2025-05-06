@@ -1,16 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { InvoiceResponse } from '../../../interfaces/invoice.interface';
 import { InvoiceService } from '../../services/invoice.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-invoice-tables',
-  imports: [DatePipe],
+  imports: [DatePipe,MatTableModule, CommonModule],
   standalone: true,
   templateUrl: './invoice-tables.component.html',
   styleUrl: './invoice-tables.component.css'
 })
 export class InvoiceTablesComponent {
+  displayedColumns: string[] = ['numberSerie', 'customer','totalValue','issuedDate','invoiceId'];
   invoices: InvoiceResponse[] = [];
   selectedInvoice: InvoiceResponse = null!;
   invoiceService = inject(InvoiceService);

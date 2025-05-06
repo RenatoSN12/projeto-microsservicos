@@ -51,7 +51,6 @@ public class ProductService(
             return Response<ProductDto>.Error(null, e.Message, 500);
         }
     }
-
     public async Task<Response<List<string>>> VerifyAllCodesExist(string[] productCodes)
     {
         try
@@ -67,6 +66,19 @@ public class ProductService(
         catch (Exception e)
         {
             return Response<List<string>>.Error(null, e.Message, 500);
+        }
+    }
+
+    public async Task<Response<List<ProductDto>>> GetAllProducts()
+    {
+        try
+        {
+            var products = await repository.GetAllProducts();
+            return Response<List<ProductDto>>.Success(products.Select(p => p.ToDto()).ToList());
+        }
+        catch (Exception e)
+        {
+            return Response<List<ProductDto>>.Error(null, e.Message, 500);
         }
     }
 }

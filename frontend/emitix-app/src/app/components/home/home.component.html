@@ -2,7 +2,12 @@
 <main>
     <div class="invoice-view">
         <section class="action-buttons">
-            <button class="btn-new-invoice">Gerar nova nota</button>
+            <div>
+                <button (click)="openNewInvoice()" mat-fab extended>
+                  <mat-icon>add</mat-icon>
+                  NOVO
+                </button>
+            </div>
         </section>
         <section class="invoice-tables">
             <app-invoice-tables></app-invoice-tables>

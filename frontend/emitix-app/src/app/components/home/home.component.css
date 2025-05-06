@@ -21,10 +21,3 @@
     gap: 1rem;
 }
 
-.btn-new-invoice {
-    padding: 1em 1.5em;
-    background-color: var(--primary-light);
-    border: 1px solid var(--primary-color);
-    color: var(--text-color);
-    cursor: pointer;
-}

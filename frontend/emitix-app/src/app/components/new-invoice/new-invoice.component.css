@@ -1,0 +1,14 @@
+.number-series-fields{
+    gap: 1rem;
+    display: flex;
+}
+
+.autocomplete-products {
+    width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
