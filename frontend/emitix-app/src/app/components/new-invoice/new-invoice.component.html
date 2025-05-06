@@ -1,32 +1,62 @@
 <h2 mat-dialog-title>Nova nota fiscal</h2>
-<mat-dialog-content class="input-fields">
+<mat-dialog-content class="input-fields" [formGroup]="form">
     <div class="number-series-fields">
         <mat-form-field>
             <mat-label>Número Nota</mat-label>
-            <input matInput>
+            <input matInput formControlName="number">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Série Nota</mat-label>
-            <input matInput>
+            <input matInput formControlName="series">
         </mat-form-field>
     </div>
-    <mat-form-field class="autocomplete-products">
-        <mat-label>Produtos</mat-label>
+    <div class="product-entry">
+      <mat-form-field>
+        <mat-label>Products</mat-label>
         <input matInput
-            aria-label="Produtos"
-            [matAutocomplete]="auto"
-            [formControl]="stateCtrl">
-        <mat-autocomplete #auto="matAutocomplete">
-            @for (product of products; track product) {
-            <mat-option [value]="product.code">
-                <span>{{product.code}}</span> |
-                <small>Descrição: {{product.description}}</small>
+              aria-label="Produtos"
+              [matAutocomplete]="auto"
+              [formControl]="productCtrl">
+        <mat-autocomplete #auto="matAutocomplete"[displayWith]="displayProduct">
+          @for (product of products; track product) {
+            <mat-option [value]="product">
+              <span>{{product.code}}</span> |
+              <small>Description: {{product.description}}</small>
             </mat-option>
-        }
+          }
         </mat-autocomplete>
-    </mat-form-field>
-  <div class="action-buttons">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Quantidade</mat-label>
+        <input 
+          matInput type="number"
+          aria-label="Quantidade"
+          [formControl]="quantityCtrl">
+      </mat-form-field>
+      <button (click)="addProduct()" mat-mini-fab aria-label="Adicionar produto">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <ul>
+      @for (item of selectedProducts; track item) {
+        <li>{{item.product.code}}</li>
+        <li>{{item.quantity}}</li>
+      }
+    </ul>
+    
+
+    <mat-chip-set>
+      @for (selectedProduct of selectedProducts; track selectedProduct) {
+        <mat-chip (removed)="removeProduct(selectedProduct.product)">
+          {{ selectedProduct.product.code }} - {{ selectedProduct.product.description }}
+          <button matChipRemove><mat-icon>cancel</mat-icon></button>
+        </mat-chip>
+      }
+      </mat-chip-set>
+
+    <div class="action-buttons">
       <button (click)="onCancelClick()" class="btn-cancel" mat-stroked-button>Cancelar</button>
-      <button class="btn-create" mat-flat-button>Criar</button>
-  </div>
+      <button (click)="createInvoice()" class="btn-create" mat-flat-button>Criar</button>
+    </div>
 </mat-dialog-content>

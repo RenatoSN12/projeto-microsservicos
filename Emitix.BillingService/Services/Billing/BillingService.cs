@@ -17,6 +17,7 @@ namespace Emitix.BillingService.Services.Billing;
 public class BillingService(
     IBillingRepository repository,
     IProductServiceClient productServiceClient,
+    IStockServiceClient stockServiceClient,
     IUnitOfWork unitOfWork,
     IServiceProvider serviceProvider)
     : IBillingService
@@ -59,8 +60,8 @@ public class BillingService(
         if (!invoiceResult.IsSuccess)
             return invoiceResult;
 
-        var a = new InvoiceDocument(invoiceResult.Data!);
-        a.GeneratePdfAndShow();
+        var report = new InvoiceDocument(invoiceResult.Data!);
+        report.GeneratePdfAndShow();
         return Response<InvoiceDto>.Success(invoiceResult.Data!);
     }
 
@@ -79,6 +80,11 @@ public class BillingService(
         {
             return Response<InvoiceDto>.Error(null, e.Message, 500);
         }
+    }
+
+    public Task<Response<InvoiceDto>> AdjustStockBeforePrintInvoice(GetInvoiceDto request)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<Response<List<InvoiceDto>>> GetAllInvoices()

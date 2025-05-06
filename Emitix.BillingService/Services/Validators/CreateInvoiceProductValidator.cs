@@ -9,7 +9,7 @@ public class CreateInvoiceProductValidator : AbstractValidator<CreateInvoiceProd
     public CreateInvoiceProductValidator()
     {
         RuleFor(x=> x.ProductCode)
-            .NotEmpty().WithMessage("O produto código do produto deve ser informado");
+            .NotEmpty().WithMessage("O código do produto deve ser informado");
 
         RuleFor(x => x.Quantity)
             .GreaterThan(0).WithMessage("A quantidade do produto deve ser maior que zero.");

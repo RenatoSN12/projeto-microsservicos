@@ -32,7 +32,7 @@ public static class BuilderExtensions
 
     public static void AddServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddTransient<IProductStockService, ProductStockService>();
+        builder.Services.AddTransient<IStockService, Services.StockService>();
         builder.Services.AddTransient<IProductStockRepository, ProductStockRepository>();
         builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IValidator<UpdateProductStockDto>, UpdateProductStockValidator>();

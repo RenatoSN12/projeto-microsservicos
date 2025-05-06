@@ -18,6 +18,7 @@ public static class AppExtensions
             .WithTags("Stocks")
             .MapEndpoint<CreateProductStockEndpoint>()
             .MapEndpoint<UpdateProductStockEndpoint>()
+            .MapEndpoint<VerifyStockAvailabilityEndpoint>()
             .MapEndpoint<GetStockByProductCodeEndpoint>();
     }
 

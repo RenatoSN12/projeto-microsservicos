@@ -1,9 +1,12 @@
 import {Component, inject} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {MatFormField, MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -11,19 +14,32 @@ import {
 } from '@angular/material/dialog';
 import { ProductService } from '../../services/product.service';
 import { ProductResponse } from '../../../interfaces/products.interface';
+import { CreateInvoiceRequest } from '../../../interfaces/create-invoice-request.interface';
+import { InvoiceService } from '../../services/invoice.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-invoice',
-  imports: [MatDialogTitle, MatDialogContent, MatInputModule,MatAutocompleteModule, MatButtonModule,FormsModule, ReactiveFormsModule, MatInputModule, MatFormField, FormsModule],
+  imports: [MatDialogTitle, MatDialogContent,MatChipsModule,MatFormFieldModule, MatAutocompleteModule ,MatIconModule, MatInputModule, MatButtonModule,FormsModule, ReactiveFormsModule, MatInputModule, MatFormField, FormsModule],
   templateUrl: './new-invoice.component.html',
   styleUrl: './new-invoice.component.css'
 })
 export class NewInvoiceComponent {
+  selectedProducts: {product: ProductResponse, quantity: number}[] = []
+
+  productCtrl = new FormControl<ProductResponse | null>(null);
+  quantityCtrl = new FormControl<number>(0, {nonNullable: true});
 
   dialogRef = inject(MatDialogRef<NewInvoiceComponent>)
-  stateCtrl = new FormControl('');
+  
+  form = new FormGroup({
+    number: new FormControl<number>(0, {nonNullable: true}),
+    series: new FormControl('', {nonNullable: true}),
+  })
+  
   products: ProductResponse[] = [];
   productService = inject(ProductService)
+  invoiceService = inject(InvoiceService)
   data = inject(MAT_DIALOG_DATA)  
   
   constructor(){
@@ -32,8 +48,49 @@ export class NewInvoiceComponent {
     })
   }
 
+  addProduct()
+  {
+    const product = this.productCtrl.value;
+    const quantity = this.quantityCtrl.value;
+
+    if(product && quantity > 0){
+      this.selectedProducts.push({product, quantity})
+      this.productCtrl.setValue(null);
+      this.quantityCtrl.setValue(0);
+    }
+  }
+
+  removeProduct(productToRemove: ProductResponse) {
+    this.selectedProducts = this.selectedProducts.filter(
+      p => p.product.code !== productToRemove.code
+    );
+  }
+
   onCancelClick(){
     this.dialogRef.close();
   }
 
+  createInvoice(){
+    if(this.form.invalid) return;
+
+    const raw = this.form.getRawValue();
+
+    const value: CreateInvoiceRequest = {
+      number: raw.number,
+      series: raw.series,
+      products: this.selectedProducts.map(p=> ({
+        productCode: p.product.code,
+        quantity: p.quantity,
+        unitPrice: p.product.price
+      }))
+    };
+
+    this.invoiceService.createInvoice(value).subscribe(() => {
+      this.dialogRef.close(true);
+    });
+  }
+
+  displayProduct(product: ProductResponse): string {
+    return product?.code || '';
+  }
 }

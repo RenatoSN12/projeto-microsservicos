@@ -5,7 +5,7 @@
         <mat-cell *matCellDef="let invoice">
           {{ invoice.number }} / {{ invoice.series }}
         </mat-cell>
-      </ng-container>
+    </ng-container>
     
       <ng-container matColumnDef="customer">
         <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
@@ -29,6 +29,17 @@
       <ng-container matColumnDef="invoiceId">
         <mat-header-cell *matHeaderCellDef> Chave NFe </mat-header-cell>
         <mat-cell *matCellDef="let invoice"> {{ invoice.id }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="printInvoice">
+        <mat-header-cell *matHeaderCellDef><mat-icon>print</mat-icon></mat-header-cell>
+        <mat-cell *matCellDef="let invoice">
+          <button
+          (click)="printInvoice({ number: invoice.number, series: invoice.series })"
+            mat-mini-fab aria-label="Imprimir nota fiscal">
+            <mat-icon>print</mat-icon>
+          </button>
+        </mat-cell>
       </ng-container>
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

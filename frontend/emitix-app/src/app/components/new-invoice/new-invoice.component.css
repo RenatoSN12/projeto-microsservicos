@@ -3,8 +3,9 @@
     display: flex;
 }
 
-.autocomplete-products {
-    width: 100%;
+.product-entry{
+    display: flex;
+    gap: 1rem;
 }
 
 .action-buttons {

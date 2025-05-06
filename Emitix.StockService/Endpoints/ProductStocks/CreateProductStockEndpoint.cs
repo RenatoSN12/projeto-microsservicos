@@ -15,7 +15,7 @@ public class CreateProductStockEndpoint : IEndpoint
             .Produces<Response<ProductStockDto>>(StatusCodes.Status201Created, "application/json");
     }
 
-    private static async Task<IResult> HandleAsync(CreateProductStockDto request,IProductStockService service)
+    private static async Task<IResult> HandleAsync(CreateProductStockDto request,IStockService service)
     {
         var result = await service.CreateProductStock(request);
         return TypedResults.Json(result, statusCode: result.Code);

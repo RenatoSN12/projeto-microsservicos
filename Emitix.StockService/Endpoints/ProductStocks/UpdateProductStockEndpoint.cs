@@ -15,7 +15,7 @@ public class UpdateProductStockEndpoint : IEndpoint
             .Produces<Response<ProductStockDto>>(StatusCodes.Status200OK, "application/json");
     }
 
-    private static async Task<IResult> HandleAsync(UpdateProductStockDto request,IProductStockService service)
+    private static async Task<IResult> HandleAsync(UpdateProductStockDto request,IStockService service)
     {
         var result = await service.UpdateProductStock(request);
         return TypedResults.Json(result, statusCode: result.Code);
