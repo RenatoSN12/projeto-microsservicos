@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.ObjectModel;
 using Emitix.BillingService.Common.Enums;
 using Emitix.BillingService.Exceptions;
 

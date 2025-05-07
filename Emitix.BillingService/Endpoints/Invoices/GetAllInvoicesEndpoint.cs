@@ -1,8 +1,7 @@
 using Emitix.BillingService.Common;
-using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.Invoice;
 using Emitix.BillingService.DTOs.Response;
-using Emitix.BillingService.Services.Billing;
-using Microsoft.AspNetCore.Mvc;
+using Emitix.BillingService.Services;
 
 namespace Emitix.BillingService.Endpoints.Invoices;
 
@@ -19,7 +18,7 @@ public class GetAllInvoicesEndpoint : IEndpoint
     {
         if (filters.InvoiceNumber != null && !string.IsNullOrWhiteSpace(filters.InvoiceSeries))
         {
-            var invoice = await service.GetByNumberAndSeriesAsync(filters);
+            var invoice = await service.GetByNumberAndSeries(filters);
             return TypedResults.Json(invoice, statusCode: invoice.Code);
         }
         

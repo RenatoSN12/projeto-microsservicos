@@ -12,7 +12,7 @@ public class ProductRepository(AppDbContext context) : IProductRepository
     public async Task<Product?> GetByCodeAsync(string code, CancellationToken cancellationToken)
         => await context.Products.AsNoTracking().FirstOrDefaultAsync(x=>x.Code == code, cancellationToken);
 
-    public async Task<List<Product>> GetAllProducts(CancellationToken cancellationToken = default)
+    public async Task<List<Product>> GetAllProductsAsync(CancellationToken cancellationToken = default)
         => await context.Products
             .AsNoTracking()
             .ToListAsync(cancellationToken);

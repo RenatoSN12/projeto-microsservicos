@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Emitix.BillingService.DTOs.Requests;
+namespace Emitix.BillingService.DTOs.Requests.Invoice;
 
 public sealed record GetInvoiceDto(
     [FromQuery(Name = "invoiceNumber")] int? InvoiceNumber,

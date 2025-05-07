@@ -15,7 +15,7 @@ public class ProductService(
     IServiceProvider serviceProvider)
     : IProductService
 {
-    public async Task<Response<ProductDto>> GetProductByCodeAsync(string productCode)
+    public async Task<Response<ProductDto>> GetProductByCode(string productCode)
     {
         try
         {
@@ -56,7 +56,7 @@ public class ProductService(
     {
         try
         {
-            var products = await repository.GetAllProducts();
+            var products = await repository.GetAllProductsAsync();
             return Response<List<ProductDto>>.Success(products.Select(p => p.ToDto()).ToList());
         }
         catch (Exception e)

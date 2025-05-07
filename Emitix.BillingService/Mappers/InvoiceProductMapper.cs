@@ -1,4 +1,4 @@
-using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.InvoiceProduct;
 using Emitix.BillingService.DTOs.Response;
 using Emitix.BillingService.Models;
 

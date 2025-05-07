@@ -4,10 +4,7 @@ namespace Emitix.ProductService.Models;
 
 public class Product
 {
-    private Product()
-    {
-        
-    }
+    private Product() { }
 
     private Product(Guid id, string code, decimal price, string? description)
     {
@@ -27,6 +24,6 @@ public class Product
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
 
-    public static Product Create(string code, decimal price, string? description = null)
-        => new Product(Guid.NewGuid(), code, price, description);
+    public static Product Create(string code, decimal price, string? description = null) =>
+        new(Guid.NewGuid(), code, price, description);
 }

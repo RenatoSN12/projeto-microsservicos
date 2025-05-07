@@ -2,13 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogContent, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ProductService } from '../../services/product.service';
 import { NewProductDto } from '../../DTOs/new-product.interface';
 import { StockService } from '../../services/stock/stock.service';
 import { NewProductStockDto } from '../../DTOs/new-productstock.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { ProductService } from '../../services/product/product.service';
 
 @Component({
   selector: 'app-new-product',

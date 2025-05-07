@@ -1,8 +1,10 @@
 using Emitix.BillingService.Data;
 using Emitix.BillingService.Data.UnitOfWork;
 using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.Invoice;
+using Emitix.BillingService.DTOs.Requests.InvoiceProduct;
 using Emitix.BillingService.Repositories;
-using Emitix.BillingService.Services.Billing;
+using Emitix.BillingService.Services;
 using Emitix.BillingService.Services.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;

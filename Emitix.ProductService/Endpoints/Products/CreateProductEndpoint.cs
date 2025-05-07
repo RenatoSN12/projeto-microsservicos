@@ -1,10 +1,7 @@
 using Emitix.ProductService.Common;
-using Emitix.ProductService.DTOs;
 using Emitix.ProductService.DTOs.Requests;
 using Emitix.ProductService.DTOs.Responses;
-using Emitix.ProductService.Services;
 using Emitix.ProductService.Services.Products;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Emitix.ProductService.Endpoints.Products;
 

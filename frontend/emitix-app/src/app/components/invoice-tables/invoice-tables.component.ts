@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { InvoiceResponse } from '../../interfaces/invoice.interface';
-import { InvoiceService } from '../../services/invoice.service';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +9,7 @@ import { UpdateProductStockDto } from '../../DTOs/product-stock.dto';
 import { StockService } from '../../services/stock/stock.service';
 import { InvoiceKeyDto } from '../../DTOs/invoice-key.dto';
 import { AlterInvoiceStatusDto } from '../../DTOs/alter-invoice-status.dto';
+import { InvoiceService } from '../../services/invoice/invoice.service';
 
 @Component({
   selector: 'app-invoice-tables',
@@ -31,8 +31,8 @@ export class InvoiceTablesComponent {
   }
 
   refreshInvoices(){
-    this.invoiceService.getInvoices().subscribe(data=> {
-      this.invoices = data;
+    this.invoiceService.getInvoices().subscribe(response=> {
+      this.invoices = response.data;
     })
   }
 

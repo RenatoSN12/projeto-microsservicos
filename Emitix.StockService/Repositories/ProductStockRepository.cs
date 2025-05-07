@@ -9,7 +9,7 @@ public class ProductStockRepository(AppDbContext context) : IProductStockReposit
     public async Task AddAsync(ProductStock request, CancellationToken cancellationToken = default)
         => await context.Stocks.AddAsync(request, cancellationToken);
 
-    public void Update(ProductStock request, CancellationToken cancellationToken = default)
+    public void Update(ProductStock request)
         => context.Stocks.Update(request);
     
     public async Task<ProductStock?> GetByProductCodeAsync(string productCode, CancellationToken cancellationToken = default)

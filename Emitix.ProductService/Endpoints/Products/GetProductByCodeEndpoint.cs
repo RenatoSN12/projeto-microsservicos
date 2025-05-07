@@ -1,7 +1,5 @@
 using Emitix.ProductService.Common;
-using Emitix.ProductService.DTOs;
 using Emitix.ProductService.DTOs.Responses;
-using Emitix.ProductService.Services;
 using Emitix.ProductService.Services.Products;
 
 namespace Emitix.ProductService.Endpoints.Products;
@@ -18,7 +16,7 @@ public class GetProductByCodeEndpoint : IEndpoint
     
     private static async Task<IResult> HandleAsync(string code, IProductService service)
     {
-        var result = await service.GetProductByCodeAsync(code);
+        var result = await service.GetProductByCode(code);
         return TypedResults.Json(result, statusCode: result.Code);
     }
     

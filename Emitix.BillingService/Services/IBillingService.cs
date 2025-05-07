@@ -1,14 +1,14 @@
 using Emitix.BillingService.Common;
-using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.Invoice;
 using Emitix.BillingService.DTOs.Response;
 
-namespace Emitix.BillingService.Services.Billing;
+namespace Emitix.BillingService.Services;
 
 public interface IBillingService
 {
-    Task<Response<InvoiceDto>> CreateInvoiceAsync(CreateInvoiceDto request);
-    Task<Response<InvoiceDto>> PrintInvoiceAsync(PrintInvoiceDto request);
-    Task<Response<InvoiceDto>> GetByNumberAndSeriesAsync(GetInvoiceDto request);
+    Task<Response<InvoiceDto>> CreateInvoice(CreateInvoiceDto request);
+    Task<Response<InvoiceDto>> PrintInvoice(PrintInvoiceDto request);
+    Task<Response<InvoiceDto>> GetByNumberAndSeries(GetInvoiceDto request);
     Task<Response<InvoiceDto>> AlterInvoiceStatus(AlterInvoiceStatusDto request);
     Task<Response<List<InvoiceDto>>> GetAllInvoices();
 }

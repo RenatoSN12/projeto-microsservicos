@@ -1,4 +1,4 @@
-namespace Emitix.BillingService.DTOs.Requests;
+namespace Emitix.BillingService.DTOs.Requests.InvoiceProduct;
 
 public sealed record AddInvoiceProductDto(
     string ProductCode,

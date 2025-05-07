@@ -12,11 +12,11 @@ import {
   MatDialogTitle,
   MatDialogContent
 } from '@angular/material/dialog';
-import { ProductService } from '../../services/product.service';
 import { ProductResponse } from '../../interfaces/products.interface';
 import { CreateInvoiceRequest } from '../../interfaces/create-invoice-request.interface';
-import { InvoiceService } from '../../services/invoice.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProductService } from '../../services/product/product.service';
+import { InvoiceService } from '../../services/invoice/invoice.service';
 
 @Component({
   selector: 'app-new-invoice',
@@ -44,8 +44,8 @@ export class NewInvoiceComponent {
   data = inject(MAT_DIALOG_DATA)  
   
   constructor(){
-    this.productService.getProcuts().subscribe(data => {
-      this.products = data;
+    this.productService.getProcuts().subscribe(response => {
+      this.products = response.data;
     })
   }
 

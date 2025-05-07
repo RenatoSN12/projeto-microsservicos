@@ -1,6 +1,7 @@
 using Emitix.BillingService.Common.Enums;
 using Emitix.BillingService.Data;
 using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.Invoice;
 using Emitix.BillingService.Models;
 using Microsoft.EntityFrameworkCore;
 

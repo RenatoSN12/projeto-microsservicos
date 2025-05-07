@@ -19,12 +19,8 @@ export class InvoiceService {
 
   http = inject(HttpClient); 
 
-  getInvoices(): Observable<InvoiceResponse[]> {
-    return this.http.get<ApiResponse<InvoiceResponse[]>>(this.apiUrl).pipe(map(res => res.data))
-  }
-
-  getProductsByInvoice(number: number, series: string): Observable<InvoiceResponse> {
-    return this.http.get<ApiResponse<InvoiceResponse>>(this.apiUrl + "?invoiceNumber=" + number + "&invoiceSeries=" + series).pipe(map(res => res.data))
+  getInvoices(): Observable<ApiResponse<InvoiceResponse[]>> {
+    return this.http.get<ApiResponse<InvoiceResponse[]>>(this.apiUrl)
   }
 
   createInvoice(values: CreateInvoiceRequest): Observable<ApiResponse<InvoiceResponse>> {

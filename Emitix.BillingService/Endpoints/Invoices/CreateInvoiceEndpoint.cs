@@ -1,8 +1,7 @@
 using Emitix.BillingService.Common;
-using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.Invoice;
 using Emitix.BillingService.DTOs.Response;
 using Emitix.BillingService.Services;
-using Emitix.BillingService.Services.Billing;
 
 namespace Emitix.BillingService.Endpoints.Invoices;
 
@@ -18,7 +17,7 @@ public class CreateInvoiceEndpoint() : IEndpoint
 
     private static async Task<IResult> HandleAsync(CreateInvoiceDto request, IBillingService service)
     {
-        var result = await service.CreateInvoiceAsync(request);
+        var result = await service.CreateInvoice(request);
         return TypedResults.Json(result, statusCode: result.Code);
     }
 }

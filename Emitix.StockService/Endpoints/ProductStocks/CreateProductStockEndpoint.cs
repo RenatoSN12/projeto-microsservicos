@@ -1,6 +1,5 @@
 using Emitix.StockService.Common;
 using Emitix.StockService.DTOs.Requests;
-using Emitix.StockService.DTOs.Responses;
 using Emitix.StockService.Services;
 using ProductStockDto = Emitix.StockService.DTOs.Responses.ProductStockDto;
 

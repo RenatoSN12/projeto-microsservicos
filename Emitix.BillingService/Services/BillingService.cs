@@ -1,13 +1,12 @@
 using Emitix.BillingService.Common;
 using Emitix.BillingService.Common.Extensions;
 using Emitix.BillingService.Data.UnitOfWork;
-using Emitix.BillingService.DTOs.Requests;
+using Emitix.BillingService.DTOs.Requests.Invoice;
 using Emitix.BillingService.DTOs.Response;
 using Emitix.BillingService.Exceptions;
 using Emitix.BillingService.Mappers;
 using Emitix.BillingService.Reports;
 using Emitix.BillingService.Repositories;
-using Emitix.BillingService.Services.Billing;
 using FluentValidation;
 using QuestPDF.Fluent;
 
@@ -19,7 +18,7 @@ public class BillingService(
     IServiceProvider serviceProvider)
     : IBillingService
 {
-    public async Task<Response<InvoiceDto>> CreateInvoiceAsync(CreateInvoiceDto request)
+    public async Task<Response<InvoiceDto>> CreateInvoice(CreateInvoiceDto request)
     {
         try
         {
@@ -27,8 +26,6 @@ public class BillingService(
             var validateResult = await validator.ValidateAsync(request);
             if (!validateResult.IsValid)
                 return Response<InvoiceDto>.Error(null, validateResult.Errors.ToMessageString(), 400);
-
-            var productCodes = request.Products.Select(x => x.ProductCode).ToArray();
 
             var invoiceEntity = request.ToEntity();
             await repository.CreateInvoiceAsync(invoiceEntity);
@@ -45,21 +42,27 @@ public class BillingService(
         }
     }
 
-    public async Task<Response<InvoiceDto>> PrintInvoiceAsync(PrintInvoiceDto request)
+    public async Task<Response<InvoiceDto>> PrintInvoice(PrintInvoiceDto request)
     {
-        var invoiceResult = await GetByNumberAndSeriesAsync(new GetInvoiceDto(request.InvoiceNumber, request.InvoiceSeries));
+        try
+        {
+            var invoiceResult = await GetByNumberAndSeries(
+                new GetInvoiceDto(request.InvoiceNumber, request.InvoiceSeries));
 
-        throw new Exception("Invoice not found");
-        
-        if (!invoiceResult.IsSuccess)
-            return invoiceResult;
+            if (!invoiceResult.IsSuccess)
+                return invoiceResult;
 
-        var report = new InvoiceDocument(invoiceResult.Data!);
-        report.GeneratePdfAndShow();
-        return Response<InvoiceDto>.Success(invoiceResult.Data!);
+            var report = new InvoiceDocument(invoiceResult.Data!);
+            report.GeneratePdfAndShow();
+            return Response<InvoiceDto>.Success(invoiceResult.Data!);
+        }
+        catch (Exception e)
+        {
+            return Response<InvoiceDto>.Error(null, e.Message, 500);
+        }
     }
 
-    public async Task<Response<InvoiceDto>> GetByNumberAndSeriesAsync(GetInvoiceDto request)
+    public async Task<Response<InvoiceDto>> GetByNumberAndSeries(GetInvoiceDto request)
     {
         try
         {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProductResponse } from '../../interfaces/products.interface';
 import { ApiResponse } from '../../interfaces/api-response.interface';
 import { NewProductDto } from '../../DTOs/new-product.interface';
