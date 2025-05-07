@@ -24,9 +24,5 @@ public class ProductStockMapping : IEntityTypeConfiguration<ProductStock>
         builder.Property(x=> x.UpdatedAt)
             .IsRequired()
             .HasColumnType("DATETIME2");
-
-        builder.Property(x => x.RowVersion)
-            .IsRowVersion()
-            .IsConcurrencyToken();
     }
 }

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Emitix.StockService.Common.Enums;
 using Emitix.StockService.Exceptions;
 
@@ -10,9 +9,6 @@ public class ProductStock
     public string ProductCode { get; private set; } = string.Empty;
     public int Quantity { get; private set; }
     public DateTime UpdatedAt { get; private set; }
-
-    [Timestamp]
-    public byte[] RowVersion { get; private set; }
     private ProductStock(){}
     private ProductStock(string productCode, int quantity)
     {

@@ -1,5 +1,4 @@
 using Emitix.StockService.Common;
-using Emitix.StockService.Common.Extensions;
 using Emitix.StockService.Data.UnitOfWork;
 using Emitix.StockService.DTOs.Requests;
 using Emitix.StockService.DTOs.Responses;
@@ -58,7 +57,7 @@ public class StockService(
             var codes = request.Select(x => x.ProductCode).ToArray();
             var stocks = await repository.GetByListProductCodesAsync(codes);
 
-            var unfoundStocks = CheckUnfoundStocks(codes, stocks);
+            var unfoundStocks = CheckUnfoundedStocks(codes, stocks);
             if (unfoundStocks.Length != 0)
                 return Response<List<ProductStockDto>>.Error(null,
                     $"Estoque não encontrado para os seguintes produtos: {string.Join(", ", unfoundStocks)}", 400);
@@ -84,7 +83,7 @@ public class StockService(
         {
             var productStock = await repository.GetByProductCodeAsync(productCode);
             return productStock == null 
-                ? NotFoundStockResponse(productCode) 
+                ? UnfoundedStockResponse(productCode) 
                 : Response<ProductStockDto>.Success(productStock.ToDto());
         }
         catch (Exception e)
@@ -112,10 +111,10 @@ public class StockService(
         return errors.ToArray();
     }
     
-    private string[] CheckUnfoundStocks(string[] requestedCodes, List<ProductStock> foundStocks)
+    private string[] CheckUnfoundedStocks(string[] requestedCodes, List<ProductStock> foundStocks)
         => requestedCodes.Except(foundStocks.Select(s => s.ProductCode)).ToArray();
     
-    private Response<ProductStockDto> NotFoundStockResponse(string productCode)
+    private Response<ProductStockDto> UnfoundedStockResponse(string productCode)
         => Response<ProductStockDto>.Error(null,
             $"Nenhum estoque ativo foi encontrado para o produto com o código {productCode}",
             404
