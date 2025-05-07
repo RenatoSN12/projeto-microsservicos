@@ -4,14 +4,6 @@ html, body {
     height: 100%;
 }
 
-:root {
-    --primary-color:#9abef8; 
-    --primary-light:#dbeafe; 
-    --primary-dark:#1e40af;
-    --background:#f8fafc;
-    --text-color:#1e293b;
-}
-
 .multi-line-snackbar {
     white-space: pre-line;
 }
